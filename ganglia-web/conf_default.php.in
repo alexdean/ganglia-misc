@@ -1,9 +1,5 @@
 <?php
 # $Id: conf.php.in 2476 2011-02-15 03:06:33Z vvuksan $
-#
-# Gmetad-webfrontend version. Used to check for updates.
-#
-include_once "./version.php";
 
 $conf['ganglia_dir'] = dirname(__FILE__);
 $conf['views_dir'] = $conf['ganglia_dir'] . '/conf';

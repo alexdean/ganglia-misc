@@ -1,7 +1,9 @@
 <?php
 /* $Id: footer.php 2362 2010-11-26 01:43:53Z vvuksan $ */
 $tpl = new Dwoo_Template_File( template("footer.tpl") );
-$data = new Dwoo_Data(); 
+$data = new Dwoo_Data();
+
+include_once "./version.php";
 $data->assign("webfrontend_version",$ganglia_version);
 
 # Get rrdtool version
