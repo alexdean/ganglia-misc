@@ -29,22 +29,11 @@ $hosts_down = array();
 # Context dependant structure.
 $metrics = array();
 
-# 1Key = "Component" (gmetad | gmond) = Version string
-$version = array();
-
-# The web frontend version, from conf.php.
-$version["webfrontend"] = "$ganglia_version";
-
-# Get rrdtool version
-$rrdtool_version = array();
-exec($conf['rrdtool'], $rrdtool_version);
-$rrdtool_version = explode(" ", $rrdtool_version[0]);
-$rrdtool_version = $rrdtool_version[1];
-$version["rrdtool"] = "$rrdtool_version";
- 
 # The name of our local grid.
 $self = " ";
 
+# store gmond and/or gmetad version info
+$backend_component = array();
 
 # Returns true if the host is alive. Works for both old and new gmond sources.
 function host_alive($host, $cluster)
@@ -67,10 +56,9 @@ function host_alive($host, $cluster)
 # Called with <GANGLIA_XML> attributes.
 function preamble($ganglia)
 {
-   global $version;
-
-   $component = $ganglia['SOURCE'];
-   $version[$component] = $ganglia['VERSION'];
+   global $backend_component;
+   $backend_component['source'] = $ganglia['SOURCE'] ;
+   $backend_component['version'] = $ganglia['VERSION'];
 }
 
 
