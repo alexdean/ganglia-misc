@@ -288,26 +288,13 @@ function end_all ($parser, $tagname)
 }
 
 
-function Gmetad ()
+function Gmetad ($ip,$port)
 {
-   global $conf, $error, $parsetime, $clustername, $hostname, $context;
+   global $error, $parsetime, $clustername, $hostname, $context;
    
-   # Parameters are optionalshow
-   # Defaults...
-   $ip = $conf['ganglia_ip'];
-   $port = $conf['ganglia_port'];
    $timeout = 3.0;
    $errstr = "";
    $errno  = "";
-   
-   //TODO: all calls to this function (in get_ganglia.php) supply 2 args.  Why do we make that optional?
-   switch( func_num_args() )
-      {
-         case 2:
-            $port = func_get_arg(1);
-         case 1:
-            $ip = func_get_arg(0);
-      }
 
    $parser = xml_parser_create();
    switch ($context)
