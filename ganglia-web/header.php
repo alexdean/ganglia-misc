@@ -3,9 +3,10 @@
 
 # Check if this context is private.
 include_once "./auth.php";
-// include_once "./calendar.php";
-checkcontrol();
-checkprivate();
+$acl = Acl::getInstance();
+if(!$acl->authorize($clustername,'view') {
+  die("You are not authorized to view this cluster.");
+}
 
 # RFM - These definitions are here to eliminate "undefined variable"
 # error messages in ssl_error_log.

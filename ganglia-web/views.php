@@ -32,6 +32,11 @@ if ( isset($_GET['create_view']) ) {
     $view_suffix = str_replace(" ", "_", $_GET['view_name']);
     $view_filename = $conf['views_dir'] . "/view_" . $view_suffix . ".json";
     $json = json_encode($empty_view);
+    
+    $acl = Acl::getInstance();
+    if(! $acl->authorize($cluster,'edit') ) {
+      die("You do not have permission to make changes to this cluster.");
+    }
     if ( file_put_contents($view_filename, $json) === FALSE ) {
     ?>
       <div class="ui-widget">
