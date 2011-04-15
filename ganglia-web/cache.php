@@ -28,6 +28,9 @@ if ( ! isset($index_array) ) {
   include_once $conf['ganglia_dir'] . "/ganglia.php";
   include_once $conf['ganglia_dir'] . "/get_ganglia.php";
 
+  // if get_context.php is used in the same execution as cache.php
+  // this overwrites the $hostname set by get_context.php.  Behavior
+  // may change when $hostname is no longer set by get_context.php
   foreach ( $index_array['cluster'] as $hostname => $elements ) {
     $hosts[] = $hostname;
   }

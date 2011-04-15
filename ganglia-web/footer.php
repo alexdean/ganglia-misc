@@ -1,22 +1,21 @@
 <?php
 /* $Id: footer.php 2334 2010-09-08 22:29:27Z bernardli $ */
 $tpl = new Dwoo_Template_File( template("footer.tpl") );
-$data = new Dwoo_Data(); 
-$data->assign("webfrontend_version",$version["webfrontend"]);
+$data = new Dwoo_Data();
 
-if ($version["rrdtool"]) {
-   $data->assign("rrdtool_version",$version["rrdtool"]);
-}
+include_once "./version.php";
+$data->assign("webfrontend_version",$ganglia_version);
 
-$backend_components = array("gmetad", "gmetad-python", "gmond");
+# Get rrdtool version
+$rrdtool_version = array();
+exec($conf['rrdtool'], $rrdtool_version);
+$rrdtool_version = explode(" ", $rrdtool_version[0]);
+$rrdtool_version = $rrdtool_version[1];
+$data->assign("rrdtool_version",$rrdtool_version);
 
-foreach ($backend_components as $backend) {
-   if (isset($version[$backend])) {
-      $data->assign("webbackend_component", $backend);
-      $data->assign("webbackend_version",$version[$backend]);
-      break;
-   }
-}
+# "gmetad", "gmetad-python", "gmond", from XML
+$data->assign("webbackend_component", $backend_component['source']);
+$data->assign("webbackend_version",$backend_component['version']);
 
 $data->assign("parsetime", sprintf("%.4f", $parsetime) . "s");
 
