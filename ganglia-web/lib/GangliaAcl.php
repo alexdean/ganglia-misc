@@ -37,14 +37,24 @@ class GangliaAcl extends Zend_Acl {
     $this->deny('guests', $resource);
   }
   
-  public function add($name) {
+  public function addResource($name) {
     $parts = explode('/', $name);
     if( count($parts) != 2 || $parts[0] != 'clusters' || $parts[0] != 'views' ) {
       throw new InvalidArgumentException("'$name' is invalid.  Please specify 'clusters/<name>' or 'views/<name>'.");
     }
     $resource = $parts[0].'/'.$parts[1];
-    parent::add( new Zend_Acl_Resource($resource, $parts[0].'/*') );
+    $this->add( new Zend_Acl_Resource($resource, $parts[0].'/*') );
   }
   
+  /**
+   * addUser('alex', 'admins');
+   */
+  public function addUser($name, $group=null) {
+    $this->addRole( new Zend_Acl_Role($name), $group);
+  }
+  
+  // $acl->addUser('alex', 'admins');
+  // $acl->allow('alex','clusters/*','edit');
+  // $acl->allow('guests','views/*', 'edit');
 }
 ?>
